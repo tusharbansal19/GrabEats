@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import "../App.css"
 // Sample images array
 const images = [
-  "/images/incir9023-scaled.jpg",
+  "/Images/incir9023-scaled.jpg",
   "/Images/1.2.jpg",  "/Images/1.1.jpg",
   "/Images/1.3.jpg", "/Images/1.4.jpg", "/Images/1.5.jpg",
 ];

@@ -65,7 +65,7 @@ if(!isAuthenticated){
       <div className="container mx-auto px-4 py-4 flex w-full   justify-between items-center">
         {/* Logo */}
         <div className="text-2xl font-bold text-orange-500" onClick={()=>{navigator("/")}}>
-          <img src="./public/Images/Logo.png" className="max-w-[100px] rounded-3xl" alt="" />
+          <img src="/Images/Logo.png" className="max-w-[100px] rounded-3xl" alt="" />
         </div>
 
         {/* Menu Items - Desktop */}
