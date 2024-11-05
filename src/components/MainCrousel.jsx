@@ -2,9 +2,9 @@ import React, { useState, useEffect } from 'react';
 import "../App.css"
 // Sample images array
 const images = [
-  "/public/images/incir9023-scaled.jpg",
-  "/public/Images/1.2.jpg",  "/public/Images/1.1.jpg",
-  "/public/Images/1.3.jpg", "/public/Images/1.4.jpg", "/public/Images/1.5.jpg",
+  "/images/incir9023-scaled.jpg",
+  "/Images/1.2.jpg",  "/Images/1.1.jpg",
+  "/Images/1.3.jpg", "/Images/1.4.jpg", "/Images/1.5.jpg",
 ];
 
 const ImageCarousel = () => {
