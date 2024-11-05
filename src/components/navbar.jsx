@@ -73,6 +73,7 @@ if(!isAuthenticated){
           <Link to="/menu">
             <Button name={"Menu"} />
           </Link>
+          
         
           <Link to="/about" className="text-gray-300 hover:text-orange-400 transition duration-300 ease-in-out">
           <Button name={"about"} />          </Link>
@@ -166,6 +167,9 @@ if(!isAuthenticated){
           </Link>
           <Link to="/menu" className="block px-4 py-2 text-gray-300 hover:bg-orange-500 hover:text-black transition duration-300 ease-in-out">
             Order Now
+          </Link>
+          <Link to="/Cart" className="block px-4 py-2 text-gray-300 hover:bg-orange-500 hover:text-black transition duration-300 ease-in-out">
+          Cart
           </Link>
           <Link to="/dashboard" className="block px-4 py-2 text-gray-300 hover:bg-orange-500 hover:text-black transition duration-300 ease-in-out">
            Dashboard
