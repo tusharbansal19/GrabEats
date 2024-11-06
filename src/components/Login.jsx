@@ -1,5 +1,6 @@
+
 import React, { useCallback, useState } from 'react';
-import '../css//Loader.css';
+import '../css/Loader.css';
 import { useAuth } from '../Context/AuthContext';
 import { Link, useNavigate } from 'react-router-dom';
 import axios from 'axios';
@@ -10,51 +11,38 @@ const LoginPage = () => {
   const [errors, setErrors] = useState({ email: false, password: false });
   const [serverError, setServerError] = useState('');
 const [loader ,setLoader]=useState(false);
-
 const navigator = useNavigate();
   const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
   const phoneRegex = /^\d{10}$/; 
-
 const validateForm = () => {
   let valid = true;
   let newErrors = { email: '',  password: '',  };
-
   if (!emailRegex.test(email)) {
     newErrors.email = 'Please enter a valid email address';
     valid = false;
   }
-
-
-
   if (password.length < 6) {
     newErrors.password = 'Password must be at least 6 characters long';
     valid = false;
   }
-
   setErrors(newErrors);
   setLoader(false);
   return valid;
 };
-
-
-
 const handleSubmit = useCallback(async (e) => {
   e.preventDefault();
   setServerError(''); // Reset server error
   setLoader(true); // Show loader
-
   if (!validateForm()) {
     setLoader(false); // Stop loader if validation fails
     return;
   }
-
   console.log({
     email: email,
     password: password,
   });
   localStorage.setItem("email",email);
   login();
-
   // try {
   //   const response = await axios.post(
   //     'https://foodappbackend-chw3.onrender.com/api/auth/register',
@@ -70,7 +58,6 @@ const handleSubmit = useCallback(async (e) => {
   //       },
   //     }
   //   );
-
   //   console.log(response.data);
   //   if(!response.ok){
   //     throw new Error("retry");
@@ -80,19 +67,13 @@ const handleSubmit = useCallback(async (e) => {
   //    localStorage.setItem("email",email);
   //    login();
   //   navigator("/"); // Navigate to the OTP page
-
   // } catch (error) {
   //   console.error('Error:', error);
   //   setServerError('Network error. Please try again later.'); // User feedback
-
   // } finally {
   //   setLoader(false); // Reset loading state
   // }
 }, [email, password , navigator]); 
-
-
-
-
   return (
     <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-black via-gray-900 to-orange-900">
       
@@ -100,7 +81,6 @@ const handleSubmit = useCallback(async (e) => {
         <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold text-white text-center">Login</h2>
         {serverError &&errors.email&&errors.password&& <p className="text-red-500 text-sm text-center">{serverError}</p>}
         <form onSubmit={handleSubmit} className="space-y-6">
-
           {/* Email Input */}
          {loader?<div className="w-[100%] my-20 flex justify-center items-center ">
           <div className="loader mx-auto"></div>
@@ -130,7 +110,6 @@ const handleSubmit = useCallback(async (e) => {
             </label>
             {errors.email && <p className="text-red-500 text-sm mt-1">Please enter your correct  email</p>}
           </div>
-
           {/* Password Input */}
           <div className="relative">
             <input
@@ -158,7 +137,6 @@ const handleSubmit = useCallback(async (e) => {
           </div>
           <div className="">Don't have any account ? <Link  className='text-red-700 underline'
           to="/signup">SignIN</Link></div>
-
           {/* Submit Button */}
           <button
           type="submit" 
@@ -173,5 +151,4 @@ const handleSubmit = useCallback(async (e) => {
     </div>
   );
 };
-
 export default LoginPage;

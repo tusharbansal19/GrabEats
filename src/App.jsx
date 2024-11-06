@@ -18,6 +18,7 @@ import { CartProvider } from './Context/CartProvider';
 import DishShowcase from './components/ShownDish';
 import { DishProvider } from './Context/DishProvider';
 import Navbar from './components/navbar';
+import VerifyPage from './components/VerifyPage';
 
 function App() {
 
@@ -40,9 +41,17 @@ function App() {
             <SignUpPage />
           </ProtectLogin>
             } />
+            
           <Route path="/login" element={<ProtectLogin>
             
+            {/* <LoginPage /> */}
             <LoginPage />
+          </ProtectLogin>
+            } />
+             <Route path="/verify" element={<ProtectLogin>
+            
+            {/* <LoginPage /> */}
+            <VerifyPage />
           </ProtectLogin>
             } />
   <Route path='/otp' element={<ProtectLogin>
@@ -52,14 +61,14 @@ function App() {
   
 } />
 
-          <Route path="/" element={<ComppProtect>
+          <Route path="/" element={
             <Home />
-            </ComppProtect>
+            
             } />
             
-          <Route path="/menu" element={<ComppProtect>
+          <Route path="/menu" element={
             <Menu />
-            </ComppProtect>
+            
             } />
             
         
@@ -68,14 +77,14 @@ function App() {
             </ComppProtect>
             } />
             
-          <Route path='/contact' element={<ComppProtect>
+          <Route path='/contact' element={
             <ContactUsPage />
-            </ComppProtect>
+            
             } />
             
-          <Route path ="/about" element={<ComppProtect>
+          <Route path ="/about" element={
             <AboutUsPage />
-            </ComppProtect>
+            
             } />
 
           <Route path='/cart' element={<ComppProtect>

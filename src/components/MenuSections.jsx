@@ -23,6 +23,8 @@ const categories = [
   
 ];
 
+
+
 const Menu = () => {
   const navigate = useNavigate();
   const searchRef=useRef("null");
