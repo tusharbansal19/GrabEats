@@ -1,27 +1,36 @@
 import React from "react";
 import styled from "styled-components";
+import { useNavigate } from "react-router-dom";
 
 const PremiminCard = ({dish}) => {
+  const navigate = useNavigate();
+  
+  // Add safety checks for dish properties
+  if (!dish || !dish.Product_Name) {
+    return null; // Don't render if dish is invalid
+  }
+
+  const categoryName = dish.get_product_category?.Product_Category || 'Unknown';
+  const rating = dish.Product_Rating || 0;
+
   return (
     <StyledWrapper>
       <div className="container max-w-[20vw] min-w-[150px] max-h-[55vw] my-6 rounded-3xl">
         <div className="card_box">
           <span />
           <div className="front-content px-2" onClick={()=>{
-            // console.log("ocdeowbhfchbsbvbsv")
-            navigator('/dish/'+dish.Product_Name, { state: dish });
+            navigate('/dish/'+dish.Product_Name, { state: dish });
           }}>
-              <small className="badge mt-7 lg:mt-0">{dish.Product_Rating +"⭐"}</small>
+              <small className="badge mt-7 lg:mt-0">{rating +"⭐"}</small>
               <img src="./public/Images/incir9023-scaled.jpg" className="max-h-[50%]" alt="" />
               <div className="description">
                 <div className="title pl-4">
                   <p className="title">
-                    <strong className="text-[0.4rem] text-orange-400 inline">{dish.Product_Name}<p className="card-footer text-[0.5rem] text-green-300 inline"> | {dish.get_product_category.Product_Category}  </p></strong>
+                    <strong className="text-[0.4rem] text-orange-400 inline">{dish.Product_Name}<span className="card-footer text-[0.5rem] text-green-300 inline"> | {categoryName}  </span></strong>
                   </p> 
                 </div>
                 <button onClick={()=>{
-                  // console.log("ocdeowbhfchbsbvbsv")
-                  navigator('/dish/'+dish.Product_Name, { state: dish });
+                  navigate('/dish/'+dish.Product_Name, { state: dish });
                 }} className="text-white text-[0.8rem] p-0  ml-2 max-w-[30px] bg-green-700 max-h-[20px]">BUY</button>
                
               </div>

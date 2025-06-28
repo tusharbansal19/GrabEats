@@ -1,21 +1,18 @@
 // src/ProtectedRoute.js
 import React from 'react';
-import { Navigate, Route } from 'react-router-dom';
-import { useAuth } from '../Context/AuthContext';
+import { Navigate } from 'react-router-dom';
+import { useSelector } from 'react-redux';
+import { selectIsAuthenticated } from '../store/authSlice';
 
 const ComppProtect = ({ element, children }) => {
-  const { isAuthenticated } = useAuth();
+  const isAuthenticated = useSelector(selectIsAuthenticated);
+  console.log('Is Authenticated (Protected):', isAuthenticated);
 
-
-
-  if(isAuthenticated)
-  return <>
-    {children}</>
+  if (isAuthenticated) {
+    return <>{children}</>;
+  }
     
-    
-    return <Navigate to="/login" />;
-
- 
+  return <Navigate to="/login" replace />;
 };
 
 export default ComppProtect;

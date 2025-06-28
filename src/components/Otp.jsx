@@ -1,15 +1,17 @@
 import axios from "axios";
 import React, { useEffect, useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
-import { useAuth } from "../Context/AuthContext";
 
 // Loader Component
-const Loader = () => <div className="loader mx-auto"></div>;
+const Loader = () => (
+  <div className="flex justify-center items-center">
+    <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-orange-500"></div>
+  </div>
+);
 
 const OtpPage = () => {
   const location = useLocation();
-  const { login } = useAuth();
-  const {email} = location.state;
+  const { email } = location.state;
   const navigator = useNavigate();
   const [otp, setOtp] = useState(["", "", "", "", "", ""]);
   const [loading, setLoading] = useState(false);
@@ -48,7 +50,8 @@ const OtpPage = () => {
       }
       console.log("otp responce" + Otp);
       localStorage.setItem("email", email);
-      login();
+      // Set a simple authentication flag for this external OTP flow
+      localStorage.setItem("isAuthenticated", "true");
       navigator("/");
     } catch (err) {
       console.error("Error:", err);

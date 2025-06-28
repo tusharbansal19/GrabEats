@@ -1,14 +1,13 @@
 import React, { useState } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
-import { useCart } from '../Context/CartProvider';
+import { useDispatch } from 'react-redux';
+import { addToCartAsync } from '../store/cartSlice';
 
 const DishShowcase = () => {
-    const {dispatch}=useCart();
-    const navigator=useNavigate();
+    const dispatch = useDispatch();
+    const navigator = useNavigate();
     const location = useLocation();
-    const [ProductPrice ,setProductPrice]=useState();
-    const  dish  = location.state ||
-    {
+    const dish = location.state || {
         "ID": 21,
         "Product_Name": "Chickpea Salad",
         "Product_Description": "A refreshing salad with chickpeas, cucumber, tomatoes, and lemon dressing.",
@@ -40,7 +39,7 @@ const DishShowcase = () => {
     const [selectedProduct, setSelectedProduct] = useState(dish.get_all_products[0]); // State for selected product variation
 
     const handleQuantityChange = (e) => {
-        setQuantity(e.target.value);
+        setQuantity(Number(e.target.value));
     };
 
     const handleProductChange = (e) => {
@@ -48,14 +47,22 @@ const DishShowcase = () => {
             (product) => product.Attribute_Combination === e.target.value
         );
         setSelectedProduct(selectedOption);
-        // console.log(selectedOption);
     };
 
     const handleAddToCart = () => {
-
-        dispatch({type:"ADD_TO_CART" ,payload:{ quantity:quantity , ...dish,Product_Discount_Price:selectedProduct.Product_Discount_Price, Product_Price:selectedProduct.Product_Price}})
-     navigator("/menu")
-        // Logic to add to cart can go here
+        dispatch(addToCartAsync({
+            ID: dish.ID,
+            Product_Name: dish.Product_Name,
+            Product_Description: dish.Product_Description,
+            Product_Rating: dish.Product_Rating,
+            get_product_category: dish.get_product_category,
+            Attribute_Combination: selectedProduct.Attribute_Combination,
+            Product_Price: selectedProduct.Product_Price,
+            Product_Discount_Price: selectedProduct.Product_Discount_Price,
+            image: selectedProduct.Picture_URL,
+            quantity: Number(quantity)
+        }));
+        navigator('/cart');
     };
 
     return (

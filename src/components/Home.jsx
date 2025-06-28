@@ -1,23 +1,28 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import "../App.css";
 import Explore from "./Explore";
 import Footer from "./Footer";
 import Navbar from "./navbar";
 import PremiminCard from "./Premimumcard";
 import ImageCarousel from "./MainCrousel";
-import { useDish } from "../Context/DishProvider";
+import { useSelector, useDispatch } from 'react-redux';
+import { selectDishes, fetchDishes } from '../store/dishesSlice';
+
 const Home = () => {
-  const categories=[1,2,3,4,5,1,2,3,4,5];
-  const {dishes}=useDish();
+  const dispatch = useDispatch();
+  const dishes = useSelector(selectDishes);
   const [showButton, setShowButton] = useState(false);
+  
+  useEffect(() => {
+    dispatch(fetchDishes());
+  }, [dispatch]);
+
   const scrollToTop = () => {
     window.scrollTo({
       top: 0,
       behavior: "smooth",
     });
-
   };
- 
 
   return (
     <div className="min-h-screen bg-gradient-to-b from-black via-gray-900 to-black text-white font-sans">
@@ -57,10 +62,13 @@ const Home = () => {
           <h2 className="text-2xl font-bold mb-4 text-center">Categories</h2>
           <div className="overflow-hidden py-5">
             <div className="flex space-x-11  animate-marquee">
-              {dishes.map((dish) => (
-                
-              <PremiminCard dish={dish}/>
-              ))}
+              {dishes && dishes.length > 0 ? (
+                dishes.map((dish, index) => (
+                  <PremiminCard key={`${dish.ID}-${index}`} dish={dish}/>
+                ))
+              ) : (
+                <div className="text-center text-gray-400">Loading dishes...</div>
+              )}
             </div>
           </div>
         </section>
@@ -96,7 +104,7 @@ const Home = () => {
           </div>
         </div>
       </footer>
-      <Footer scrollToTop={scrollToTop}/>
+      {/* <Footer scrollToTop={scrollToTop}/> */}
     </div>
   );
 };

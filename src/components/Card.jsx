@@ -1,11 +1,12 @@
 import React from "react";
 import styled from "styled-components";
-import { useCart } from "../Context/CartProvider";
+import { useDispatch } from 'react-redux';
+import { addToCartAsync } from '../store/cartSlice';
 import { useNavigate } from "react-router-dom";
 
 const Card = ({dish}) => {
-const {dispatch}=useCart();
-const navigator = useNavigate();
+  const dispatch = useDispatch();
+  const navigator = useNavigate();
 
   return (
     <StyledWrapper>
@@ -28,10 +29,9 @@ const navigator = useNavigate();
                   </p> <p className="card-footer"> | {dish.get_product_category.Product_Category}  </p>
                 </div>
                 <button onClick={()=>{
-                  // console.log("ocdeowbhfchbsbvbsv")
                   navigator('/dish/'+dish.Product_Name, { state: dish });
-                }} className="text-white text-[0.8rem] p-0  m-0 max-w-[30px] bg-green-700 max-h-[20px]">BUY</button>
-               
+                }} className="text-white text-[0.8rem] p-0  m-0 max-w-[30px] bg-green-700 max-h-[20px]">View</button>
+                <button onClick={() => dispatch(addToCartAsync({ ...dish, Attribute_Combination: dish.get_all_products[0].Attribute_Combination }))} className="ml-2 text-white text-[0.8rem] p-0 m-0 max-w-[60px] bg-orange-600 max-h-[20px] rounded">Add to Cart</button>
               </div>
             </div>
           </div>
