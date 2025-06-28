@@ -12,11 +12,29 @@ export const fetchCart = createAsyncThunk(
   'cart/fetchCart',
   async (_, { rejectWithValue }) => {
     const email = localStorage.getItem('email');
+    console.log('Fetching cart for email:', email);
     if (!email) return rejectWithValue('User not logged in');
     try {
       const response = await axios.get(`http://localhost:8000/grabeats/mycart/get?email=${email}`);
-      return response.data.cart;
+      console.log('Fetch cart response:', response.data);
+      console.log('Response data structure:', JSON.stringify(response.data, null, 2));
+      
+      // Try to find the cart array in the response
+      let cartData = [];
+      if (response.data.cart && Array.isArray(response.data.cart)) {
+        cartData = response.data.cart;
+      } else if (response.data.data && response.data.data.cart && Array.isArray(response.data.data.cart)) {
+        cartData = response.data.data.cart;
+      } else if (response.data.data && Array.isArray(response.data.data)) {
+        cartData = response.data.data;
+      } else if (response.data.data && response.data.data.items && Array.isArray(response.data.data.items)) {
+        cartData = response.data.data.items;
+      }
+      
+      console.log('Extracted cart data:', cartData);
+      return cartData;
     } catch (err) {
+      console.error('Fetch cart error:', err);
       return rejectWithValue(err.response?.data?.error || 'Failed to fetch cart');
     }
   }
@@ -27,11 +45,15 @@ export const addToCartAsync = createAsyncThunk(
   'cart/addToCart',
   async (product, { rejectWithValue }) => {
     const email = localStorage.getItem('email');
+    console.log('Adding to cart for email:', email);
+    console.log('Product to add:', product);
     if (!email) return rejectWithValue('User not logged in');
     try {
       const response = await axios.post('http://localhost:8000/grabeats/mycart/add', { email, product });
+      console.log('Add to cart response:', response.data);
       return response.data.cart;
     } catch (err) {
+      console.error('Add to cart error:', err);
       return rejectWithValue(err.response?.data?.error || 'Failed to add product to cart');
     }
   }

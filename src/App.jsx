@@ -30,8 +30,7 @@ function AppContent() {
       <Routes>
         <Route path="/signup" element={<ProtectLogin><SignUpPage /></ProtectLogin>} />
         <Route path="/login" element={<ProtectLogin><LoginPage /></ProtectLogin>} />
-        <Route path="/verify" element={<ProtectLogin><VerifyPage /></ProtectLogin>} />
-        <Route path='/otp' element={<ProtectLogin><OtpPage /></ProtectLogin>} />
+
         <Route path="/" element={<Home />} />
         <Route path="/menu" element={<Menu />} />
         <Route path='/dashboard' element={<ComppProtect><UserDashboard /></ComppProtect>} />

@@ -4,62 +4,34 @@ import { useSelector, useDispatch } from 'react-redux';
 import { selectCart, selectCartLoading, selectCartError, fetchCart, removeFromCartAsync, updateQuantity, clearCart } from '../store/cartSlice';
 import { useNavigate } from 'react-router-dom';
 
-// --- DUMMY DATA FOR DEMONSTRATION ---
-const DUMMY_CART_DATA = [
-  {
-    ID: 'dummy-1',
-    Product_Name: 'Spicy Chicken Wings',
-    Product_Description: 'Crispy chicken wings tossed in a fiery hot sauce with a hint of garlic and lime.',
-    image: 'https://images.unsplash.com/photo-1599499808453-61b4d24177b7?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w1ODc3NTJ8MHwxfHNlYXJjaHw3fHxjaGlja2VuJTIwd2luZ3N8ZW58MHx8fHwxNzE5NjMxNjAyfDA&ixlib=rb-4.0.3&q=80&w=400',
-    Product_Price: 350.00,
-    Product_Discount_Price: 50.00, // Strikethrough price will be 350+50 = 400
-    Product_Rating: 4.8,
-    Attribute_Combination: 'Regular, Spicy',
-    get_product_category: { Product_Category: 'Appetizers' },
-    quantity: 2,
-  },
-  {
-    ID: 'dummy-2',
-    Product_Name: 'Classic Veggie Burger',
-    Product_Description: 'A wholesome patty made from mixed vegetables and lentils, served on a toasted bun with fresh lettuce and tomato.',
-    image: 'https://images.unsplash.com/photo-1598463590559-00f7e817a01d?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w1ODc3NTJ8MHwxfHNlYXJjaHw3fHx2ZWdnaWUlMjBidXJnZXJ8ZW58MHx8fHwxNzE5NjMxNTgwfDA&ixlib=rb-4.0.3&q=80&w=400',
-    Product_Price: 280.00,
-    Product_Discount_Price: 0,
-    Product_Rating: 4.5,
-    Attribute_Combination: 'Standard, with cheese',
-    get_product_category: { Product_Category: 'Main Course' },
-    quantity: 1,
-  },
-];
-// --- END OF DUMMY DATA ---
-
 const MyCart = () => {
-  const cartFromRedux = useSelector(selectCart);
+  const cart = useSelector(selectCart) || [];
   const loading = useSelector(selectCartLoading);
   const error = useSelector(selectCartError);
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
-  // Use dummy data if Redux cart is empty and not loading
-  const cart = cartFromRedux.length === 0 && !loading && !error ? DUMMY_CART_DATA : cartFromRedux;
-  
   // State to hold local quantities for a snappy UI
   const [quantities, setQuantities] = useState({});
   // State to manage dropdown visibility for each item
   const [openDetails, setOpenDetails] = useState({});
 
   useEffect(() => {
-    // Only fetch from Redux if you are not using dummy data
-    if (cartFromRedux.length === 0 && !loading && !error) {
-      // If we are showing dummy data, don't dispatch another fetch call.
-      return; 
-    }
+    console.log('MyCart component mounted, fetching cart...');
     dispatch(fetchCart());
-  }, [dispatch, cartFromRedux.length, loading, error]);
+  }, [dispatch]);
 
-  // Sync local quantities with cart data (Redux or dummy)
+  // Debug cart data
   useEffect(() => {
-    if (cart.length > 0) {
+    console.log('Cart data updated:', cart);
+    console.log('Cart length:', cart?.length);
+    console.log('Loading state:', loading);
+    console.log('Error state:', error);
+  }, [cart, loading, error]);
+
+  // Sync local quantities with cart data
+  useEffect(() => {
+    if (cart && cart.length > 0) {
       const initialQuantities = cart.reduce((acc, dish) => {
         acc[dish.ID] = dish.quantity;
         return acc;
@@ -78,6 +50,7 @@ const MyCart = () => {
 
   // Calculate prices
   const getSubtotal = () => {
+    if (!cart || !Array.isArray(cart) || cart.length === 0) return 0;
     return cart.reduce((total, dish) => {
       const quantity = quantities[dish.ID] || dish.quantity;
       return total + dish.Product_Price * quantity;
@@ -85,6 +58,7 @@ const MyCart = () => {
   };
 
   const getDiscount = () => {
+    if (!cart || !Array.isArray(cart) || cart.length === 0) return 0;
     return cart.reduce((total, dish) => {
       const quantity = quantities[dish.ID] || dish.quantity;
       return total + (dish.Product_Discount_Price ? parseFloat(dish.Product_Discount_Price) : 0) * quantity;
@@ -108,17 +82,11 @@ const MyCart = () => {
       ...prevQuantities,
       [dishId]: newQuantity
     }));
-    // Only dispatch to Redux if the item is from the actual cart, not dummy data
-    if (cartFromRedux.some(item => item.ID === dishId)) {
-        dispatch(updateQuantity({ ID: dishId, quantity: newQuantity }));
-    }
+    dispatch(updateQuantity({ ID: dishId, quantity: newQuantity }));
   };
 
   const handleRemove = (dish) => {
-    // Only dispatch to Redux if the item is from the actual cart
-    if (cartFromRedux.some(item => item.ID === dish.ID)) {
-        dispatch(removeFromCartAsync(dish.ID));
-    }
+    dispatch(removeFromCartAsync(dish.ID));
   };
 
   const handleCheckout = () => {
@@ -181,7 +149,7 @@ const MyCart = () => {
           </div>
 
           {/* Cart Items List */}
-          {cart.length > 0 ? (
+          {cart && cart.length > 0 ? (
             <div className="space-y-2 md:space-y-4 max-h-[calc(100vh-150px)] md:max-h-[calc(100vh-200px)] lg:max-h-[calc(100vh-150px)] overflow-y-auto pr-1 md:pr-2 custom-scrollbar">
               {cart.map((dish) => (
                 <div
@@ -278,10 +246,10 @@ const MyCart = () => {
                               <FaStar /> {dish.Product_Rating}
                           </div>
                           <p className="text-gray-500 text-[10px] md:text-xs mt-0.5 md:mt-1">
-                              Category: <span className="font-semibold">{dish.get_product_category.Product_Category}</span>
+                              Category: <span className="font-semibold">{dish.get_product_category?.Product_Category || 'Unknown'}</span>
                           </p>
                           <p className="text-gray-500 text-[10px] md:text-xs">
-                              Attributes: <span className="font-semibold">{dish.Attribute_Combination}</span>
+                              Attributes: <span className="font-semibold">{dish.Attribute_Combination || 'Standard'}</span>
                           </p>
                       </div>
                   </div>
@@ -312,7 +280,7 @@ const MyCart = () => {
         </div>
 
         {/* Cart Summary & Checkout Sidebar */}
-        {cart.length > 0 && (
+        {cart && cart.length > 0 && (
           <div className="w-full lg:w-80 p-4 md:p-6 rounded-lg md:rounded-xl bg-gray-800 shadow-lg flex flex-col gap-3 md:gap-4 lg:sticky lg:top-8 self-start transition-all duration-300">
             <h2 className="text-lg md:text-2xl font-bold text-white mb-1 md:mb-2">Order Summary</h2>
             <div className="space-y-2 md:space-y-3 text-xs md:text-sm font-medium text-gray-300">
@@ -326,9 +294,7 @@ const MyCart = () => {
               </div>
               <div className="flex justify-between items-center border-b border-gray-700 pb-1 md:pb-2">
                 <span>Delivery Charges</span>
-                <span className={`font-semibold ${deliveryCharges === 0 ? 'text-green-400' : 'text-white'}`}>
-                  {deliveryCharges === 0 ? 'Free' : `₹${deliveryCharges.toFixed(2)}`}
-                </span>
+                <span className={`font-semibold ${deliveryCharges === 0 ? 'text-green-400' : 'text-white'}`}>{deliveryCharges === 0 ? 'Free' : `₹${deliveryCharges.toFixed(2)}`}</span>
               </div>
             </div>
             <div className="flex justify-between items-center text-lg md:text-xl font-bold text-orange-300 pt-2 md:pt-3 border-t border-gray-700">
@@ -342,97 +308,25 @@ const MyCart = () => {
               <FaCheckCircle className="text-lg md:text-xl" />
               Checkout
             </div>
-            <div className="mt-1 md:mt-2 text-center text-gray-400 text-[10px] md:text-xs">
-              <p>Secure payments guaranteed.</p>
+          </div>
+        )}
+
+        {/* Sticky Checkout div for Mobile (when cart is not empty) */}
+        {cart && cart.length > 0 && (
+          <div className="lg:hidden fixed bottom-0 left-0 right-0 p-2 md:p-3 bg-gray-900 border-t border-gray-800 z-50 shadow-lg transition-transform duration-300 ease-out transform translate-y-0">
+            <div className="flex justify-between items-center">
+              <span className="font-bold text-white">Grand Total:</span>
+              <span className="font-bold text-orange-400">₹{grandTotal.toFixed(2)}</span>
+              <button
+                onClick={handleCheckout}
+                className="bg-gradient-to-r from-orange-600 to-red-700 text-white font-bold rounded-full px-4 py-2 shadow-md hover:scale-105 transition-transform duration-200"
+              >
+                Checkout
+              </button>
             </div>
           </div>
         )}
       </div>
-
-      {/* Sticky Checkout div for Mobile (when cart is not empty) */}
-      {cart.length > 0 && (
-        <div className="lg:hidden fixed bottom-0 left-0 right-0 p-2 md:p-3 bg-gray-900 border-t border-gray-800 z-50 shadow-lg transition-transform duration-300 ease-out transform translate-y-0">
-          <div className="flex justify-between items-center">
-            <div className="flex flex-col">
-              <span className="text-gray-400 text-[10px] md:text-xs">Grand Total</span>
-              <span className="text-lg md:text-2xl font-extrabold text-white">₹{grandTotal.toFixed(2)}</span>
-            </div>
-            <div
-              onClick={handleCheckout}
-              className="w-auto px-4 py-1.5 md:px-6 md:py-2 bg-gradient-to-r from-orange-600 to-red-700 text-white font-bold rounded-full text-sm md:text-base shadow-md transition-all duration-200 transform hover:scale-105 active:scale-95"
-            >
-              <FaCheckCircle className="inline-block mr-1 md:mr-1.5 text-sm md:text-lg" />
-              Checkout
-            </div>
-          </div>
-        </div>
-      )}
-
-      {/* Custom Keyframe Animations and Scrollbar Styling */}
-      <style jsx>{`
-        @keyframes pulse-fade {
-          0%, 100% {
-            opacity: 1;
-            transform: scale(1);
-          }
-          50% {
-            opacity: 0.7;
-            transform: scale(1.05);
-          }
-        }
-        .animate-pulse-fade {
-          animation: pulse-fade 2s infinite ease-in-out;
-        }
-        @keyframes fadeIn {
-            from {
-                opacity: 0;
-                transform: translateY(10px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-        .animate-fade-in {
-            animation: fadeIn 0.6s ease-out forwards;
-        }
-
-        /* FIRETIME Background Animation */
-        @keyframes firetime {
-          0% { background-position: 0% 0%; }
-          50% { background-position: 100% 100%; }
-          100% { background-position: 0% 0%; }
-        }
-        .firetime-bg {
-          background-image: radial-gradient(circle at 10% 20%, rgba(248, 179, 13, 0.1) 0%, transparent 40%),
-                            radial-gradient(circle at 90% 80%, rgba(255, 69, 0, 0.15) 0%, transparent 50%),
-                            radial-gradient(circle at 50% 50%, rgba(255, 140, 0, 0.05) 0%, transparent 60%);
-          background-size: 200% 200%;
-          animation: firetime 20s infinite alternate ease-in-out;
-        }
-
-        /* Custom Scrollbar for Cart Items */
-        .custom-scrollbar::-webkit-scrollbar {
-          width: 6px;
-        }
-        @media (min-width: 768px) {
-          .custom-scrollbar::-webkit-scrollbar {
-            width: 8px;
-          }
-        }
-        .custom-scrollbar::-webkit-scrollbar-track {
-          background: #333; /* Darker track */
-          border-radius: 10px;
-        }
-        .custom-scrollbar::-webkit-scrollbar-thumb {
-          background: #f97316; /* Orange thumb */
-          border-radius: 10px;
-          border: 2px solid #333; /* Border around thumb */
-        }
-        .custom-scrollbar::-webkit-scrollbar-thumb:hover {
-          background: #ea580c; /* Darker orange on hover */
-        }
-      `}</style>
     </div>
   );
 };
