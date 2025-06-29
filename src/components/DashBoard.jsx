@@ -2,6 +2,8 @@ import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { logoutUser, selectUser } from '../store/authSlice';
+import { FiUser, FiMail, FiPhone, FiLogOut, FiActivity, FiShoppingCart, FiStar } from 'react-icons/fi';
+import './dashboard.css';
 
 const UserDashboard = () => {
   const navigator = useNavigate();
@@ -14,6 +16,16 @@ const UserDashboard = () => {
     email: 'john.doe@example.com',
     phone: '+1-234-567-8901',
     profilePhoto: '', // URL of the profile picture, leave empty to display initials
+    stats: {
+      orders: 12,
+      favorites: 5,
+      activity: 23,
+    },
+    activity: [
+      { icon: <FiShoppingCart />, title: 'Ordered "Spicy Pizza"', time: '2 hours ago' },
+      { icon: <FiStar />, title: 'Rated "Veg Burger" 5 stars', time: '1 day ago' },
+      { icon: <FiActivity />, title: 'Updated profile info', time: '3 days ago' },
+    ],
   };
 
   // Function to display the initials if profile photo is not available
@@ -27,61 +39,73 @@ const UserDashboard = () => {
       navigator('/login');
     } catch (error) {
       console.error('Logout error:', error);
-      // Even if logout fails, redirect to login
       navigator('/login');
     }
   };
 
   return (
-    <div className="min-h-screen pt-16 bg-gradient-to-br from-gray-800 via-gray-900 to-black flex justify-center items-center p-6">
-      <div className="max-w-4xl w-full bg-white shadow-lg rounded-lg overflow-hidden md:flex">
-        {/* Profile Section */}
-        <div className="bg-gradient-to-r from-orange-500 to-orange-600 md:w-1/3 p-8 flex flex-col items-center justify-center">
-          <div className="w-40 h-40 rounded-full overflow-hidden bg-white flex items-center justify-center text-5xl text-orange-600 font-bold">
+    <div className="dashboard-container pt-16 flex flex-col items-center justify-center relative">
+      {/* Animated Fire Particles */}
+      <div className="particles">
+        {[...Array(9)].map((_, i) => <div className="particle" key={i} />)}
+      </div>
+      <div className="dashboard-card max-w-4xl w-full md:flex overflow-hidden mt-8">
+        {/* Profile Section with Fire Effect */}
+        <div className="profile-section md:w-1/3 p-8 flex flex-col items-center justify-center relative">
+          <div className="profile-avatar mb-4">
             {userData.profilePhoto ? (
-              <img src={userData.profilePhoto} alt="Profile" className="w-full h-full object-cover" />
+              <img src={userData.profilePhoto} alt="Profile" />
             ) : (
               <span>{getInitials(userData.name)}</span>
             )}
           </div>
-          <h2 className="text-2xl md:text-3xl font-bold text-white mt-4">{userData.name}</h2>
-          <p className="text-orange-200 text-lg">{userData.email}</p>
+          <h2 className="text-2xl md:text-3xl font-bold text-white mt-2 mb-1 animate-pulse">{userData.name}</h2>
+          <p className="text-orange-100 text-lg mb-2 animate-fadeInUp">{userData.email}</p>
+         
         </div>
-
         {/* User Info Section */}
-        <div className="md:w-2/3 p-8">
-          <h3 className="text-2xl md:text-3xl font-bold text-gray-800 mb-6">User Information</h3>
-          <div className="space-y-4">
-            {/* Name */}
-            <div className="flex items-center">
-              <span className="font-bold text-gray-700 text-lg w-32">Name:</span>
-              <span className="text-gray-900 text-lg">{userData.name}</span>
+        <div className="md:w-2/3 p-8 flex flex-col justify-between">
+          <div>
+            <h3 className="text-2xl md:text-3xl font-bold text-white mb-6 animate-fadeInUp">User Information</h3>
+            <div className="user-info-section">
+              <div className="info-item">
+                <span className="info-label"><FiUser /> Name:</span>
+                <span className="info-value">{userData.name}</span>
+              </div>
+              <div className="info-item">
+                <span className="info-label"><FiMail /> Email:</span>
+                <span className="info-value">{userData.email}</span>
+              </div>
+              <div className="info-item">
+                <span className="info-label"><FiPhone /> Phone:</span>
+                <span className="info-value">{userData.phone}</span>
+              </div>
             </div>
-
-            {/* Email */}
-            <div className="flex items-center">
-              <span className="font-bold text-gray-700 text-lg w-32">Email:</span>
-              <span className="text-gray-900 text-lg">{userData.email}</span>
+            {/* Recent Activity Section */}
+            <div className="activity-section mt-6">
+              <h4 className="text-xl font-bold text-white mb-4">Recent Activity</h4>
+              {userData.activity?.length ? userData.activity.map((act, idx) => (
+                <div className="activity-item" key={idx}>
+                  <div className="activity-icon">{act.icon}</div>
+                  <div className="activity-content">
+                    <div className="activity-title">{act.title}</div>
+                    <div className="activity-time">{act.time}</div>
+                  </div>
+                </div>
+              )) : <div className="text-gray-300">No recent activity.</div>}
             </div>
-
-            {/* Phone */}
-            <div className="flex items-center">
-              <span className="font-bold text-gray-700 text-lg w-32">Phone:</span>
-              <span className="text-gray-900 text-lg">{userData.phone}</span>
-            </div>
-
-            {/* More User Details */}
-            {/* You can add more fields here as per your requirements */}
           </div>
-
-          {/* Logout Button */}
-          <div className="mt-6">
+          {/* Action Buttons */}
+          <div className="action-buttons mt-8">
             <button
               onClick={handleLogout}
-              className="py-2 px-4 bg-gradient-to-r from-red-500 to-red-600 hover:from-red-600 hover:to-red-700 text-white font-semibold rounded-lg shadow-md transition-all duration-300"
+              className="action-btn btn-danger"
             >
-              Logout
+              <FiLogOut /> Logout
             </button>
+            <a href="#" className="action-btn btn-secondary">
+              <FiUser /> Edit Profile
+            </a>
           </div>
         </div>
       </div>
