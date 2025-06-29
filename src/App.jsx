@@ -17,7 +17,7 @@ import ProtectLogin from './components/Protectroutes';
 import { CartProvider } from './Context/CartProvider';
 import DishShowcase from './components/ShownDish';
 import Navbar from './components/navbar';
-import VerifyPage from './components/VerifyPage';
+import VerifyPage from './components/verifyPage';
 import Footer from './components/Footer';
 
 function AppContent() {
@@ -30,6 +30,7 @@ function AppContent() {
       <Routes>
         <Route path="/signup" element={<ProtectLogin><SignUpPage /></ProtectLogin>} />
         <Route path="/login" element={<ProtectLogin><LoginPage /></ProtectLogin>} />
+
 
         <Route path="/" element={<Home />} />
         <Route path="/menu" element={<Menu />} />
