@@ -33,7 +33,7 @@ const UserDashboard = () => {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-gray-800 via-gray-900 to-black flex justify-center items-center p-6">
+    <div className="min-h-screen pt-16 bg-gradient-to-br from-gray-800 via-gray-900 to-black flex justify-center items-center p-6">
       <div className="max-w-4xl w-full bg-white shadow-lg rounded-lg overflow-hidden md:flex">
         {/* Profile Section */}
         <div className="bg-gradient-to-r from-orange-500 to-orange-600 md:w-1/3 p-8 flex flex-col items-center justify-center">

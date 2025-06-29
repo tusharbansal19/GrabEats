@@ -136,7 +136,7 @@ const MyCart = () => {
   const grandTotal = getGrandTotal();
 
   return (
-    <div className="min-h-screen bg-gray-950 p-2 md:p-4 sm:p-6 lg:p-8 text-gray-200 font-sans">
+    <div className="min-h-screen pt-16 bg-gray-950 p-2 md:p-4 sm:p-6 lg:p-8 text-gray-200 font-sans">
       <div className="max-w-6xl mx-auto flex flex-col lg:flex-row gap-3 md:gap-6 lg:gap-8">
         {/* Main Cart Section */}
         <div className="flex-1 flex flex-col gap-3 md:gap-6">

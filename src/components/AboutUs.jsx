@@ -4,7 +4,7 @@ import { FaGithub, FaTwitter, FaInstagram, FaYoutube, FaDiscord } from "react-ic
 
 const AboutUsPage = () => {
   return (
-    <div className="min-h-screen bg-gradient-to-br from-black via-gray-900 to-orange-900 text-white p-6 md:p-10">
+    <div className="min-h-screen pt-16 bg-gradient-to-br from-black via-gray-900 to-orange-900 text-white p-6 md:p-10">
       <div className="max-w-7xl mx-auto space-y-12">
         {/* Header Section */}
         <header className="text-center space-y-4">

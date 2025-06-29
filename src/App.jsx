@@ -31,6 +31,7 @@ function AppContent() {
         <Route path="/signup" element={<ProtectLogin><SignUpPage /></ProtectLogin>} />
         <Route path="/login" element={<ProtectLogin><LoginPage /></ProtectLogin>} />
 
+{/* <div className="pt-20"> */}
 
         <Route path="/" element={<Home />} />
         <Route path="/menu" element={<Menu />} />
@@ -41,6 +42,7 @@ function AppContent() {
         <Route path='/card' element={<ComppProtect><Card/></ComppProtect>} />
         <Route path='/dish/*' element={<ComppProtect><DishShowcase/></ComppProtect>} />
         <Route path='/*' element={<h1>not reachable</h1>} />
+{/* </div> */}
       </Routes>
       {!hideHeaderFooter && <Footer scrollToTop={() => window.scrollTo({top: 0, behavior: 'smooth'})} />}
     </>
