@@ -260,7 +260,7 @@ const MyCart = () => {
             // --- EMPTY CART LAYOUT WITH FIRETIME ANIMATION ---
             <div className="flex flex-col items-center justify-center min-h-[calc(100vh-180px)] md:min-h-[calc(100vh-250px)] text-center px-2 md:px-4 py-8 md:py-12 rounded-xl md:rounded-2xl relative overflow-hidden bg-gray-900 border border-gray-700 firetime-bg">
                 <div className="relative z-10">
-                    <img src="https://placehold.co/200x200/FF8C00/FFFFFF/png?text=Empty+Cart" alt="Empty Cart" className="w-24 h-24 md:w-36 md:h-36 sm:w-48 sm:h-48 mb-4 md:mb-6 opacity-90 animate-fade-in drop-shadow-2xl" />
+                    {/* <img src="https://placehold.co/200x200/FF8C00/FFFFFF/png?text=Empty+Cart" alt="Empty Cart" className="w-24 h-24 md:w-36 md:h-36 sm:w-48 sm:h-48 mb-4 md:mb-6 opacity-90 animate-fade-in drop-shadow-2xl" /> */}
                     <h2 className="text-2xl md:text-3xl sm:text-4xl font-bold text-white mb-2 md:mb-3 drop-shadow-lg">Your cart is empty!</h2>
                     <p className="text-gray-400 text-sm md:text-base sm:text-lg max-w-lg mb-6 md:mb-8">
                         Looks like you haven't added anything to your cart yet.
@@ -268,7 +268,7 @@ const MyCart = () => {
                         Let's fill it up with some delicious food!
                     </p>
                     <div
-                        onClick={() => navigate('/dish')}
+                        onClick={() => navigate('/menu')}
                         className="px-6 py-2 md:px-8 md:py-3 text-base md:text-lg font-bold bg-gradient-to-r from-orange-500 to-red-600 text-white rounded-full shadow-2xl transition-all duration-300 transform hover:scale-105 hover:from-orange-600 hover:to-red-700 active:scale-95 focus:outline-none focus:ring-4 focus:ring-orange-400 focus:ring-offset-2 focus:ring-offset-gray-900"
                     >
                         <FaStore className="inline-block mr-1.5 md:mr-2 text-lg md:text-xl" />

@@ -14,7 +14,7 @@ export const AuthProvider = ({ children }) => {
     setError(null);
     console.log("email",email, "password",password);
     try {
-      const response = await axios.post('http://localhost:8000/auth/login', { email, password });
+      const response = await axios.post('https://grabeats-server.onrender.com/auth/login', { email, password });
 
 
       console.log("email",email, "password",password);
@@ -40,7 +40,7 @@ export const AuthProvider = ({ children }) => {
   const register = async (name, email, password, phone) => {
     setError(null);
     try {
-      const response = await axios.post('http://localhost:8000/auth/register', { name, email, password, phone });
+      const response = await axios.post('https://grabeats-server.onrender.com/auth/register', { name, email, password, phone });
       if (response.data && response.data.token) {
         localStorage.setItem('token', response.data.token);
         localStorage.setItem('email', email);

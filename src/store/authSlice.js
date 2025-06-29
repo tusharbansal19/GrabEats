@@ -6,7 +6,7 @@ export const loginUser = createAsyncThunk(
   'auth/loginUser',
   async ({ email, password }, { rejectWithValue }) => {
     try {
-      const response = await axios.post('http://localhost:8000/auth/login', { 
+      const response = await axios.post('https://grabeats-server.onrender.com/auth/login', { 
         email, 
         password 
       });
@@ -29,7 +29,7 @@ export const registerUser = createAsyncThunk(
   'auth/registerUser',
   async ({ name, email, password, phone }, { rejectWithValue }) => {
     try {
-      const response = await axios.post('http://localhost:8000/auth/register', { 
+      const response = await axios.post('https://grabeats-server.onrender.com/auth/register', { 
         name, 
         email, 
         password, 
@@ -56,7 +56,7 @@ export const logoutUser = createAsyncThunk(
     try {
       const token = localStorage.getItem('token');
       if (token) {
-        await axios.post('http://localhost:8000/auth/logout', {}, {
+        await axios.post('https://grabeats-server.onrender.com/auth/logout', {}, {
           headers: { Authorization: `Bearer ${token}` }
         });
       }
@@ -85,7 +85,7 @@ export const getUserProfile = createAsyncThunk(
         return rejectWithValue('No token found');
       }
       
-      const response = await axios.get('http://localhost:8000/auth/profile', {
+      const response = await axios.get('https://grabeats-server.onrender.com/auth/profile', {
         headers: { Authorization: `Bearer ${token}` }
       });
       

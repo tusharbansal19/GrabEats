@@ -15,7 +15,7 @@ export const fetchCart = createAsyncThunk(
     console.log('Fetching cart for email:', email);
     if (!email) return rejectWithValue('User not logged in');
     try {
-      const response = await axios.get(`http://localhost:8000/grabeats/mycart/get?email=${email}`);
+      const response = await axios.get(`https://grabeats-server.onrender.com/grabeats/mycart/get?email=${email}`);
       console.log('Fetch cart response:', response.data);
       console.log('Response data structure:', JSON.stringify(response.data, null, 2));
       
@@ -49,7 +49,7 @@ export const addToCartAsync = createAsyncThunk(
     console.log('Product to add:', product);
     if (!email) return rejectWithValue('User not logged in');
     try {
-      const response = await axios.post('http://localhost:8000/grabeats/mycart/add', { email, product });
+      const response = await axios.post('https://grabeats-server.onrender.com/grabeats/mycart/add', { email, product });
       console.log('Add to cart response:', response.data);
       return response.data.cart;
     } catch (err) {
@@ -66,7 +66,7 @@ export const removeFromCartAsync = createAsyncThunk(
     const email = localStorage.getItem('email');
     if (!email) return rejectWithValue('User not logged in');
     try {
-      const response = await axios.delete('http://localhost:8000/grabeats/mycart/delete', { data: { email, productId } });
+      const response = await axios.delete('https://grabeats-server.onrender.com/grabeats/mycart/delete', { data: { email, productId } });
       return response.data.cart;
     } catch (err) {
       return rejectWithValue(err.response?.data?.error || 'Failed to remove product from cart');

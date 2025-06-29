@@ -6,6 +6,7 @@ import Card from './Card';
 import { useSelector, useDispatch } from 'react-redux';
 import { selectDishes, selectDishesLoading, selectDishesError, fetchDishes } from '../store/dishesSlice';
 import { FaSearch, FaSyncAlt, FaFire } from 'react-icons/fa';
+import './MenuSections.css';
 
 const Menu = () => {
   const navigate = useNavigate();
@@ -381,37 +382,7 @@ const Menu = () => {
 </section>
 
 {/* Updated CSS Styles for seamless scrolling */}
-<style jsx>{`
-  @keyframes seamlessScroll {
-    0% {
-      transform: translateX(0);
-    }
-    100% {
-      transform: translateX(-33.333%);
-    }
-  }
-  
-  .animate-seamless-scroll {
-    animation: seamlessScroll 30s linear infinite;
-  }
-  
-  .hover\\:pause-scroll:hover {
-    animation-play-state: paused;
-  }
-  
-  /* Responsive adjustments */
-  @media (max-width: 640px) {
-    .animate-seamless-scroll {
-      animation-duration: 25s;
-    }
-  }
-  
-  @media (min-width: 1024px) {
-    .animate-seamless-scroll {
-      animation-duration: 35s;
-    }
-  }
-`}</style>
+{/* Removed style jsx - moved to MenuSections.css */}
 
               {/* Enhanced Dishes Section */}
               <section className="mb-10">
@@ -452,106 +423,7 @@ const Menu = () => {
         </div>
       </div>
 
-      {/* Custom Styles */}
-      <style jsx>{`
-        @keyframes marquee {
-          0% { transform: translateX(0); }
-          100% { transform: translateX(-50%); }
-        }
-        
-        .animate-marquee {
-          animation: marquee 40s linear infinite;
-        }
-        
-        .hover\\:pause-marquee:hover {
-          animation-play-state: paused;
-        }
-
-        .fire-particle {
-          width: 4px;
-          height: 4px;
-          background: radial-gradient(circle, #ff6600, #ff0000);
-          border-radius: 50%;
-          animation: fireFloat linear infinite;
-        }
-
-        .ember {
-          width: 2px;
-          height: 2px;
-          background: #ffaa00;
-          border-radius: 50%;
-          animation: emberFloat linear infinite;
-          opacity: 0.7;
-        }
-
-        @keyframes fireFloat {
-          0% {
-            transform: translateY(100vh) scale(0);
-            opacity: 0;
-          }
-          10% {
-            opacity: 1;
-          }
-          90% {
-            opacity: 1;
-          }
-          100% {
-            transform: translateY(-100px) scale(1);
-            opacity: 0;
-          }
-        }
-
-        @keyframes emberFloat {
-          0% {
-            transform: translateY(100vh) translateX(0px);
-            opacity: 0;
-          }
-          10% {
-            opacity: 0.7;
-          }
-          90% {
-            opacity: 0.7;
-          }
-          100% {
-            transform: translateY(-100px) translateX(50px);
-            opacity: 0;
-          }
-        }
-
-        .animate-spin-slow {
-          animation: spin 3s linear infinite;
-        }
-
-        .custom-scrollbar::-webkit-scrollbar {
-          width: 6px;
-        }
-        
-        .custom-scrollbar::-webkit-scrollbar-track {
-          background: rgba(0, 0, 0, 0.3);
-          border-radius: 3px;
-        }
-        
-        .custom-scrollbar::-webkit-scrollbar-thumb {
-          background: linear-gradient(to bottom, #f97316, #dc2626);
-          border-radius: 3px;
-        }
-        
-        .custom-scrollbar::-webkit-scrollbar-thumb:hover {
-          background: linear-gradient(to bottom, #ea580c, #b91c1c);
-        }
-
-        @media (max-width: 640px) {
-          .fire-particle {
-            width: 2px;
-            height: 2px;
-          }
-          
-          .ember {
-            width: 1px;
-            height: 1px;
-          }
-        }
-      `}</style>
+      {/* Custom Styles - moved to MenuSections.css */}
     </div>
   );
 };

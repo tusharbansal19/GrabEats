@@ -37,7 +37,7 @@ const categories = [
 
 const getRandom = (arr) => arr[Math.floor(Math.random() * arr.length)];
 
-const API_BASE = 'http://localhost:8000/grabeats';
+const API_BASE = 'https://grabeats-server.onrender.com/grabeats';
 
 // Dummy data for fallback when API fails
 const dummyDishes = [
