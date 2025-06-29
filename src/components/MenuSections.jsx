@@ -270,9 +270,12 @@ const Menu = () => {
                               }`}
                             >
                               <img 
-                                src={dish.get_product_category?.Picture_Url} 
+                                src={dish.get_product_category?.Picture_Url||"/Images/incir9023-scaled.jpg"} 
                                 alt="" 
                                 className="w-10 h-10 rounded-full mr-3 object-cover border-2 border-orange-400/50" 
+                                onError={(e) => {
+                                    e.target.src = '/Images/incir9023-scaled.jpg';
+                                }}
                               />
                               <div className="flex-1">
                                 <div className="flex items-center flex-wrap gap-2">
@@ -355,6 +358,9 @@ const Menu = () => {
                 }`}
                 alt={cat}
                 loading="lazy"
+                onError={(e) => {
+                  e.target.src = '/Images/incir9023-scaled.jpg';
+                }}
               />
               {isSelected && (
                 <div className="absolute -top-1 -right-1 w-5 h-5 sm:w-6 sm:h-6 bg-green-500 rounded-full flex items-center justify-center animate-bounce">

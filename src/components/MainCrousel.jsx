@@ -30,7 +30,7 @@ const ImageCarousel = () => {
   }, []);
 
   return (
-    <div className="md:w-1/2 max-w-[250px] max-h-[250px] bg-[url('/public/Images/2.0.jpg')] bg-cover bg-center w-full lg:max-w-full lg:max-h-full md:max-w-[500px] md:max-h-[500px] overflow-hidden mt-12 md:mt-0 relative p-4">
+    <div className="md:w-1/2 max-w-[250px] max-h-[250px] bg-[url('/Images/2.0.jpg')] bg-cover bg-center w-full lg:max-w-full lg:max-h-full md:max-w-[500px] md:max-h-[500px] overflow-hidden mt-12 md:mt-0 relative p-4">
       <img
         className={`h-auto w-full max-w-[250px] max-h-[250px] lg:max-w-full lg:max-h-full md:max-w-[500px] md:max-h-[500px] animate-upDn object-cover rounded-full shadow-lg backdrop-filter backdrop-blur-lg bg-opacity-20 transition-opacity duration-500 ease-in-out ${fade ? 'opacity-0' : 'opacity-100'}`}
         src={images[currentIndex]}

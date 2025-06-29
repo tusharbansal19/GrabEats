@@ -22,7 +22,7 @@ const PremiminCard = ({dish}) => {
             navigate('/dish/'+dish.Product_Name, { state: dish });
           }}>
               <small className="badge mt-7 lg:mt-0">{rating +"⭐"}</small>
-              <img src="./public/Images/incir9023-scaled.jpg" className="max-h-[50%]" alt="" />
+              <img src="/Images/incir9023-scaled.jpg" className="max-h-[50%]" alt="" />
               <div className="description">
                 <div className="title pl-4">
                   <p className="title">

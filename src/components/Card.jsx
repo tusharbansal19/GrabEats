@@ -14,14 +14,14 @@ const Card = ({dish}) => {
         <div className="content">
           <div className="back">
             <div className="back-content flex justify-center flex-col items-center " >
-              <img src="./public/Images/incir9023-scaled.jpg" alt="" />
+              <img src="/Images/incir9023-scaled.jpg" alt="" />
               <strong className="text-[0.7rem]" >{dish.Product_Name}</strong>
             </div>
           </div>
           <div className="front">
             <div className="front-content">
               <small className="badge">{dish.Product_Rating +"⭐"}</small>
-              <img src="./public/Images/incir9023-scaled.jpg" className="max-h-[50%]" alt="" />
+              <img src="/Images/incir9023-scaled.jpg" className="max-h-[50%]" alt="" />
               <div className="description">
                 <div className="title">
                   <p className="title">

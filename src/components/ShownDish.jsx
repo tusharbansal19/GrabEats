@@ -286,6 +286,9 @@ const DishShowcase = () => {
                                     src={dish.get_product_category.Picture_Url}
                                     alt={dish.Product_Name}
                                     className="w-full h-48 sm:h-64 md:h-80 lg:h-96 object-cover rounded-t-xl lg:rounded-tr-none lg:rounded-l-xl border-b-4 lg:border-b-0 lg:border-r-4 border-orange-600"
+                                    onError={(e) => {
+                                        e.target.src = '/Images/incir9023-scaled.jpg';
+                                    }}
                                 />
                                 {/* Small product images */}
                                 <div className="absolute bottom-2 md:bottom-4 left-2 md:left-4 flex space-x-1 md:space-x-2">
