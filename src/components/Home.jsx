@@ -32,7 +32,7 @@ const Home = () => {
     
       {/* <ThemedNavbar/> */}
       {/* <Navbar/> */}
-      <section className="relative">
+      <section className="relative pt-20">
         <div className="absolute inset-0 bg-gradient-to-r from-black via-gray-800 to-black opacity-70"></div>
         <div className="relative z-10 container mx-auto px-4 py-2 md:py-2 flex flex-col md:flex-row justify-between items-center">
           {/* Left Text Section */}
